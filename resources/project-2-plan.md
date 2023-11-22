@@ -7,9 +7,9 @@ Review the Project 2 requirements and check out some [examples](https://romebell
 In this space below, list **THREE** ideas for your Project 2. For each idea, include [user stories](https://www.atlassian.com/agile/project-management/user-stories) for each idea and a link to the API(s) you want to use for it.
 
 --------------------------------------------------------
-1. 
-2. 
-3.
+1. Cup-ConnectApp
+2. Yardie-Tech Connect 
+3. Escape to Ocho Rios Blog
 ---------------------------------------------------------
 
 Make a PR when you're done!
@@ -28,13 +28,91 @@ In the space below:
 
 ----------------------------------------------------------
 ### User Stories
+1. Idea #1 - The Cup-Connect App :
+Primary User Story: I want to connect with other international tourists attending the event.So that I can share experiences, make new friends, and enhance my overall World Cup experience.
+
+As a user, I can create a profile with information about my country, interests, and preferred languages.
+
+As a user, I can browse a list of other international tourists who have created profiles.
+
+As a user, I can filter and search for tourists based on their country, interests, or language preferences.
+
+As a user, I can send connection requests to other tourists.
+
+As a user, I receive notifications when someone sends me a connection request.
+
+As a user, I can accept or decline connection requests.
+--------------------------------------------------------------------------------------
+Future Enhancements:
+
+As a connected user, I can initiate private messages with other connected tourists.
+
+As a user, I can see a map displaying the locations of connected tourists around the World Cup venues.
+
+As a user, I can receive recommendations for meetups, events, or activities based on my profile and preferences.
+
+//Additional Considerations //:
+
+The application should prioritize user privacy and allow users to control the visibility of their information.
+
+The user interface should be intuitive and user-friendly, encouraging users to explore and connect.
+
+The application should support multiple languages to accommodate the diverse international audience.
 
 ----------------------------------------------------------
 ### Wireframes
-
+---------------------------------
+|        World Cup Connect Logo  |
+---------------------------------
+|    [Search Bar] [Profile Icon] |
+---------------------------------
+|                               |
+|        Upcoming Matches        |
+|                               |
+|   [Match Card] [Match Card]    |
+|   [Match Card] [Match Card]    |
+|                               |
+|         Explore Teams          |
+|                               |
+|   [Team Card] [Team Card]      |
+|   [Team Card] [Team Card]      |
+|                               |
+|     Connect with Fans          |
+|                               |
+|   [Fan Post] [Fan Post]        |
+|   [Fan Post] [Fan Post]        |
+|                               |
+---------------------------------
+|      Bottom Navigation Bar     |
+|   [Home] [Explore] [Connect]   |
+---------------------------------
 ----------------------------------------------------------
 
 Make a PR when you're done!
+
+Model Ideas
+--------------------------------------
+
+User Model:
+
+Attributes:
+id
+username
+email
+password 
+favorite_teams (relationship to Tourist Model atrribute: Country)
+
+Tourist Model:
+
+Attributes:
+id
+Full Name 
+Biography
+Interests
+Country
+Date of Birth
+
+
 
 
 ## Requirements Inside `Project Board`

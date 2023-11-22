@@ -1,0 +1,12 @@
+
+FIFA API:https://www.fifa.com/developer
+FIFA itself provides an API that developers can use to access data related to FIFA competitions, including the World Cup. 
+
+REST Countries API:https://restcountries.com/
+API Endpoint: REST Countries
+Functionality: Retrieves information about countries, including flags, currencies, and languages. Useful for displaying details about users' home countries.
+
+
+Random User Generator API:https://randomuser.me/
+API Endpoint: Random User Generator
+Functionality: Generates random user data, including names, profiles, and images. Useful for creating sample user profiles.
