@@ -1,8 +1,8 @@
 // generate-fake-data.js
+// ran npm install @faker-js/faker --save-dev
 const faker = require('faker');
 const { User, Tourist } = require('../models'); 
 
-// Assuming you have Faker and other necessary imports
 
 const generateFakeUsers = (count) => {
   const users = [];

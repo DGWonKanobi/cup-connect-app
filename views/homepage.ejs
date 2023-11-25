@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World Cup Connect</title>
+  <style>
+
+    
+  </style>
+<body>
+
+  <h1>World Cup Connect</h1>
+
+  <!-- Send Connection Request Form -->
+  <form id="sendRequestForm" action="/connect/send/:receiverId" method="post">
+    <label for="receiverId">Receiver ID:</label>
+    <input type="text" id="receiverId" name="receiverId" required>
+    <button type="submit">Send Connection Request</button>
+  </form>
+
+  <!-- Accept Connection Request Form -->
+  <form id="acceptRequestForm" action="/connect/accept/:requestId" method="put">
+    <label for="requestId">Request ID:</label>
+    <input type="text" id="requestId" name="requestId" required>
+    <button type="submit">Accept Connection Request</button>
+  </form>
+
+  <!-- Decline Connection Request Form -->
+  <form id="declineRequestForm" action="/connect/decline/:requestId" method="delete">
+    <label for="requestId">Request ID:</label>
+    <input type="text" id="requestId" name="requestId" required>
+    <button type="submit">Decline Connection Request</button>
+  </form>
+
+  <!-- Add your JavaScript for handling form submissions using AJAX here -->
+  <script>
+    async function sendRequest() {
+      const receiverId = document.getElementById('receiverId').value;
+      
+      try {
+        const response = await fetch(`/connect/send/${receiverId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          
+        });
+
+        const data = await response.json();
+        alert(data.message); // Display response message
+      } catch (error) {
+        console.error('Error sending connection request:', error);
+        alert('Error sending connection request. Please try again.');
+      }
+    }
+
+    async function acceptRequest() {
+      const requestId = document.getElementById('requestIdAccept').value;
+      
+      try {
+        const response = await fetch(`/connect/accept/${requestId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const data = await response.json();
+        alert(data.message); // Display response message
+      } catch (error) {
+        console.error('Error accepting connection request:', error);
+        alert('Error accepting connection request. Please try again.');
+      }
+    }
+
+    async function declineRequest() {
+      const requestId = document.getElementById('requestIdDecline').value;
+      
+      try {
+        const response = await fetch(`/connect/decline/${requestId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const data = await response.json();
+        alert(data.message); // Display response message
+      } catch (error) {
+        console.error('Error declining connection request:', error);
+        alert('Error declining connection request. Please try again.');
+      }
+    }
+  </script>
+</body>
+</html>
