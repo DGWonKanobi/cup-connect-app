@@ -6,6 +6,8 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('./config/ppConfig');
 const isLoggedIn = require('./middleware/isLoggedIn');
+const { faker } = require('@faker-js/faker');
+const tourist = require('./models/tourist');
 
 // environment variables
 SECRET_SESSION = process.env.SECRET_SESSION;
@@ -41,6 +43,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/auth', require('./controllers/auth'));
+// app.use('/tourists', require('./controllers/tourists'));
 
 // Add this below /auth controllers
 app.get('/profile', isLoggedIn, (req, res) => {
