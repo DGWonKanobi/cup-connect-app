@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.83.1">
+    <title>Signin Template · Bootstrap v5.0</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+    crossorigin="anonymous"
+  />
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    
+<main class="form-signin">
+  <form action="/tourist/<%= tourist.id %>/?_method=PUT" method="POST">
+    <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+    <h1 class="h3 mb-3 fw-normal">Edit Tourist <%= tourist.id %></h1>
+
+    <div class="form-floating">
+      <input type="text" class="form-control" id="full_name" name="full_name" placeholder="full_name">
+      <label for="full_name""><%= tourist.full_name %></label>
+    </div>
+    
+    <div class="form-floating">
+      <input type="text" class="form-control" id="biography" name="biography" placeholder="biography">
+      <label for="biography"><%= tourist.biography %></label>
+    </div>
+    
+    <div class="form-floating">
+      <input type="text" class="form-control" id="interests" name="interests" placeholder="interests">
+      <label for="interests"><%= tourist.Interests %></label>
+    </div>
+   
+    <div class="form-floating">
+        <input type="text" class="form-control" id="country" name="country" placeholder="country">
+        <label for="country"><%= tourist.country %></label>
+      </div>
+      
+      <div class="form-floating">
+        <input type="text" class="form-control" id="age" name="age" placeholder="age">
+        <label for="age"><%= tourist.age %></label>
+      </div>
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Update Tourist</button>
+    <a href="/tourists/<%= tourist.id %>" class="btn btn-danger">Cancel Update</a>
+    <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+  </form>
+</main>
+
+
+    
+  </body>
+</html>

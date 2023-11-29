@@ -11,6 +11,13 @@
 <body>
 
   <h1>World Cup Connect</h1>
+  
+  <form action="/tourists/search" method="get">
+    <label for="country">Country:</label>
+    <input type="text" id="country" name="country" required>
+    <button type="submit">Search</button>
+  </form>
+
 
   <!-- Send Connection Request Form -->
   <form id="sendRequestForm" action="/connect/send/:receiverId" method="post">
@@ -34,7 +41,7 @@
   </form>
 
   <!-- Add your JavaScript for handling form submissions using AJAX here -->
-  <script>
+  <!-- <script>
     async function sendRequest() {
       const receiverId = document.getElementById('receiverId').value;
       
@@ -92,6 +99,6 @@
         alert('Error declining connection request. Please try again.');
       }
     }
-  </script>
+  </script> -->
 </body>
 </html>

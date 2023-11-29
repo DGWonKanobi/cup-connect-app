@@ -1,115 +1,196 @@
-
 const express = require('express');
-const { User, Tourist } = require('./models'); // 
 const router = express.Router();
+const db = require('../models')
 const { faker } = require('@faker-js/faker');
-const tourist = require('../models/tourist');
+const path = require('path');
+const Tourist = require('../models/tourist');
 
-const app = express();
+router.get('/', (req, res) => {
 
-app.post('/tourists-test', (req, res) => {
+  res.render('tourists/index')
 
-  let newTourist = new tourist(
-    faker.person.firstName(),
-    faker.person.bio(),
-    faker.lorem.words(),
-    faker.location.country(),
-    faker.number.int({ min: 10, max: 100 })
-  )
-  // print the new
-  console.log('new tourist', newTourist);
-  fs.readFile('tourists.json', 'utf8', (error, data) => {
-    if (error) {
-      return res.json({ message: 'Error occured. Please try again' });
-    } else {
-      data = JSON.parse(data); //array
-      let index = data.length
-      newTourist.id = index; // new tourist has an id
-      data.push(newTourist);
-      // write data to tourists.json data file 
-      fs.writeFile('tourists.json', stringData, 'utf8', (error, result) => {
-        return res.json({ tourist: newTourist });
-      })
-
-    }
-  })
 
 })
-// app.use(express.json());
 
-// router.post("/", (req, res) => {
-//   console.log(req.body)
-//   return res.render("Connect to tourist user ");
-// });
-// // POST route to send a connection request
-// router.post('/connect/send/:receiverId', async (req, res) => {
-//   try {
-//     const { receiverId } = req.params;
-//     const senderId = req.user.id; // we need authentication middleware to get the current user
+ 
+// POST /accounts x
+// PUT /accounts/:accountNumber
+// DELETE /accounts/:accountNumber
 
-//     // Check if the connection request already exists
-//     const existingRequest = await Tourist.findOne({
-//       where: { senderId, receiverId, status: 'pending' }
-//     });
 
-//     if (existingRequest) {
-//       return res.status(400).json({ message: 'Connection request already sent.' });
-//     }
 
-//     // Create a new connection request
-//     await Tourist.create({ senderId, receiverId, status: 'pending' });
+// GET /accounts X
+router.get('/', (req, res) => {
+  fs.readFile('./data/tourists.json', 'utf8', (error, data) => {
+      if (error) {
+          console.log('---- error ----', error);
+          return res.json({ message: 'Error occured. Please try again.'})
+      } else {
+          data = JSON.parse(data); // array
+          // return res.json({ data: data });
+          // console.log(__dirname)
+          // let directory = __dirname.slice(0, __dirname.length - 12)
+          // console.log(directory);
+          // return res.sendFile(path.join(__dirname, '..', '/views/accounts/index.html'));
+          return res.render('accounts/index.ejs', { data: data });
+      }
+  });
+});
 
-//     return res.status(200).json({ message: 'Connection request sent successfully.' });
-//   } catch (error) {
-//     console.error('Error sending connection request:', error);
-//     res.status(500).json({ message: 'Internal server error.' });
-//   }
-// });
+router.get('/new', (req, res) => {
+  return res.render('tourists/new.ejs');
+});
 
-// // PUT route to accept a connection request
-// router.put('/connect/accept/:requestId', async (req, res) => {
-//   try {
-//     const { requestId } = req.params;
+// GET /accounts/:accountNumber
+router.get('/:full_name', (req, res) => {
+  fs.readFile('./data/tourists.json', 'utf8', (error, data) => {
+      if (error) {
+          console.log('---- error ----', error);
+          return res.json({ message: 'Error occured. Please try again.'})
+      } else {
+          data = JSON.parse(data); // array
+          
+          // iterate through the array and check each account
+          // match that accountNumber with req.params.accountNumbe    
+          for (let i = 0; i < data.length; i++) {
+              let tourist = data[i];
+              if (tourist.full_name === req.params.full_name) {
+                  // return res.json({ account: account });
+                  // return res.sendFile(path.join(__dirname, '..', '/views/accounts/show.html'));
+                  return res.render('tourists/show.ejs', { tourist: tourist });
+              }
+          }
+      }
+      return res.status(404).json({ message: 'Account cannot be found.'})
+  });
+});
+router.get('/:tourist_id/edit', (req, res) => {
+  db.tourist.findAll()
+    .then(tourists => {
+      const parsedTourists = tourists.map(a => a.toJSON());
+      // iterate through the array and check each tourist
+      // match that tourist_id with req.params.tourist_id    
+      for (let i = 0; i < parsedTourists.length; i++) {
+        let tourist = parsedTourists[i];
+        if (tourist.id === req.params.tourist_id) {
+          return res.render('tourists/edit.ejs', { tourist: tourist });
+        }
+      }
+    })
+    .catch(error => {
+      if (error) {
+        console.log('---- error ----', error);
+        return res.status(404).json({ message: 'Tourist cannot be found.' })
+      }
+    });
+});
 
-//     // Find the connection request
-//     const connectionRequest = await Tourist.findByPk(requestId);
+// POST /accounts x
 
-//     if (!connectionRequest) {
-//       return res.status(404).json({ message: 'Connection request not found.' });
-//     }
+router.post('/', (req, res) => {
+  // print the data that the user submits
+  console.log(req.body); 
+  
+  // create a new tourist
+  let newTourist = new Tourist(
+     faker.person.fullName(),
+     faker.person.bio(),
+     faker.word.words(),
+     faker.location.country(),
+     faker.number.int({ min: 10, max: 100 }),
+  )
+  // print the newTourist
+  console.log('new tourist', newTourist);
+  fs.readFile('./data/tourists.json', 'utf8', (error, data) => {
+      if (error) {
+          return res.json({ message: 'Error occured. Please try again' });
+      } else {
+          data = JSON.parse(data); // array
+          let index = data.length;
+          newTourist.id = index; // the new tourist  has an id now.
+          data.push(newTourist);
+          let stringData = JSON.stringify(data);
+          // write the data to the file
+          fs.writeFile('./data/tourists.json', stringData, 'utf8', (error, result) => {
+              return res.redirect(`/tourists/${newTourist.full_name}`);
+          })
+          
+      }
+  })
+});
 
-//     // Update the status to 'accepted'
-//     connectionRequest.status = 'accepted';
-//     await connectionRequest.save();
 
-//     return res.status(200).json({ message: 'Connection request accepted.' });
-//   } catch (error) {
-//     console.error('Error accepting connection request:', error);
-//     res.status(500).json({ message: 'Internal server error.' });
-//   }
-// });
 
-// // DELETE route to decline a connection request
-// router.delete('/connect/decline/:requestId', async (req, res) => {
-//   try {
-//     const { requestId } = req.params;
+router.put('/:user_id', (req, res) => {
+  // how would I print the user_id
+  console.log('to view user id', req.params.user_id);
+  // -------------------------------------------
+  console.log('body', req.body); // data that we want to update
+  // -------------------------------------------
+  // find the tourist  with the user_id
+  // grab the tourist by user_id and update
+  let updatedTourist = {};
+  fs.readFile('./data/tourists.json', 'utf8', (error, data) => {
+      if (error) {
+          return res.json({ message: 'Error occured. Please try again...'});
+      } else {
+          data = JSON.parse(data); // array of objects(tourist)
+          // use map to iterate through and update the fields
+          newData = data.map((tourist) => {
+              // check to see if the account number is the same.
+              if (tourists.user_id === req.params.user_id) {
+                  // change the data
+                  tourist.full_name = req.body.full_name || tourist.full_name;
+                  tourist.biography = req.body.biography || tourist.biography;
+                  tourist.interests = req.body.interests|| tourist.interests;
+                  tourist.country = req.body.country|| tourist.country;
+                  tourist.age = Number(req.body.age || tourist.age);
+                  
+                   // if there is a pin to change, then it will update
+                  
+                  updatedTourist = { ...tourist };
+                  return updatedTourist;
+              } else {
+                  return tourist;
+              }
+          });
 
-//     // Find the connection request
-//     const connectionRequest = await Tourist.findByPk(requestId);
+          // write the new array of objects inside of the tourists.json file
+          fs.writeFile('./data/tourists.json', JSON.stringify(newData), 'utf8', (error, result) => {
+              // respond with the updated tourist information
+              // return res.json({ tourist: updatedTourist });
+              return res.redirect(`/tourists/${req.params.user_id}`);
+          })
+      }
+  })
+})
 
-//     if (!connectionRequest) {
-//       return res.status(404).json({ message: 'Connection request not found.' });
-//     }
+router.delete('/:user_id', (req, res) => {
+  // how would I print the user_id
+  console.log('to view user_id', req.params.user_id);
+  // find the tourist with the user_id
+  // grab the tourist  by user_id and update
+  const { user_id } = req.params;
+  fs.readFile('./data/tourists.json', 'utf8', (error, data) => {
+    if (error) {
+      return res.json({ message: 'Error occured. Please try again...' });
+    } else {
+      data = JSON.parse(data); // array of objects(tourist)
+      // use map to iterate through and update the fields
+      const newData = data.filter(account => account.accountNumber !== accountNumber);
+      // write the new array of objects inside of the tourists.json file
+      fs.writeFile('./data/tourists.json', JSON.stringify(newData), 'utf8', (error, result) => {
+        // respond with the updated tourist  information
+        if (newData.length !== data.length) {
+          //   return res.json({ message: `Tourist with user_id ${user_id} deleted successfully` });
+          return res.redirect('/tourists');
+        } else {
+          return res.status(404).json({ message: 'Tourist does not exist' })
+        }
+      })
+    }
+  })
+});
 
-//     // Update the status to 'declined'
-//     connectionRequest.status = 'declined';
-//     await connectionRequest.save();
 
-//     return res.status(200).json({ message: 'Connection request declined.' });
-//   } catch (error) {
-//     console.error('Error declining connection request:', error);
-//     res.status(500).json({ message: 'Internal server error.' });
-//   }
-// });
-
-module.exports = app;
+module.exports = router;
