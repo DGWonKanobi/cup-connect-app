@@ -14,12 +14,36 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   tourist.init({
-    full_name: DataTypes.STRING,
-    biography: DataTypes.STRING,
-    interests: DataTypes.STRING,
+    full_name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    biography: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    interests: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    
     country: DataTypes.STRING,
-    age: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER
+    age: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isINT: { msg: "Must be an integer"
+          
+        }
+      }
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isINT: { msg: "Must be an integer"},
+        
+      },
+      unique: true
+    },
   }, {
     sequelize,
     modelName: 'tourist',
