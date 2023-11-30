@@ -89,68 +89,73 @@ async function deleteUser() {
 // @todo run deleteUser function below
 
 
-// CREATE
-database.tourist.create({
-    full_name: "Pele Brazil",
-    biography: "Outgoing Lover of Life",
-    interests: "Traveling , Food, Dancing,",
-    country: "Brazil",
-    age: "33",
-    user_id: 1
-})
-    .then((newTourist) => {
-        //
-        //print the JSON data
-        console.log('newTourist', newTourist.toJSON());
-        console.log('----------------------------');
-    });
 
 
 
-//READ (Find) One Tourist
-database.tourist.findONe({ where: { id : 1 } }) 
-.then(user => {
-    console.log('found tourist', user.toJSON());
-})
 
-//READ (Find) All Tourists
-database.tourist.findAll()
-.then((users) => {
-    console.log('list of tourists', tourists); // array
-    const parsedUsers = tourists.map(user => tourist.toJSON());
-    console.log('------------------------------');
-    console.log('parsedTourists', parsedTourists); // array
-})
 
-//FIND OR CREATE TOURIST
-database.user.findOrCreate({
- where: { full_name: 'Pele Brazil' },
- defaults: { biography: "Outgoing Lover of Life",
- interests: "Traveling , Food, Dancing",
- country: "Brazil",
- age: "33",
- user_id: 1}
-})
-.then(([user, created]) => {
-    console.log('was this tourist created', created);
-    console.log(user.toJSON());
-})
+// // CREATE
+// database.tourist.create({
+//     full_name: "Pele Brazil",
+//     biography: "Outgoing Lover of Life",
+//     interests: "Traveling , Food, Dancing,",
+//     country: "Brazil",
+//     age: "33",
+//     user_id: 1
+// })
+//     .then((newTourist) => {
+//         //
+//         //print the JSON data
+//         console.log('newTourist', newTourist.toJSON());
+//         console.log('----------------------------');
+//     });
 
-//UPDATE A TOURIST
-const data = {
-    interests: "Traveling , Food, Dancing",
-    age: 23,
-}
-const query = {user_id: 1}
 
-database.tourist.update(data, { where: query })
-.then(numOfRowsUpdated => {
-    console.log('number of rows updated', numOfRowsUpdated);
-})
 
-//DESTROY (DELETE) A TOURIST
-const searchQuery = { id: 1 }
-database.tourist.destroy({ where: searchQuery })
-.then(result => {
-    console.log('result', result);
-})
+// //READ (Find) One Tourist
+// database.tourist.findONe({ where: { id : 1 } }) 
+// .then(user => {
+//     console.log('found tourist', user.toJSON());
+// })
+
+// //READ (Find) All Tourists
+// database.tourist.findAll()
+// .then((users) => {
+//     console.log('list of tourists', tourists); // array
+//     const parsedUsers = tourists.map(user => tourist.toJSON());
+//     console.log('------------------------------');
+//     console.log('parsedTourists', parsedTourists); // array
+// })
+
+// //FIND OR CREATE TOURIST
+// database.user.findOrCreate({
+//  where: { full_name: 'Pele Brazil' },
+//  defaults: { biography: "Outgoing Lover of Life",
+//  interests: "Traveling , Food, Dancing",
+//  country: "Brazil",
+//  age: "33",
+//  user_id: 1}
+// })
+// .then(([user, created]) => {
+//     console.log('was this tourist created', created);
+//     console.log(user.toJSON());
+// })
+
+// //UPDATE A TOURIST
+// const data = {
+//     interests: "Traveling , Food, Dancing",
+//     age: 23,
+// }
+// const query = {user_id: 1}
+
+// database.tourist.update(data, { where: query })
+// .then(numOfRowsUpdated => {
+//     console.log('number of rows updated', numOfRowsUpdated);
+// })
+
+// //DESTROY (DELETE) A TOURIST
+// const searchQuery = { id: 1 }
+// database.tourist.destroy({ where: searchQuery })
+// .then(result => {
+//     console.log('result', result);
+// })
